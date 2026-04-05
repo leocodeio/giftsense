@@ -3,20 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useGiftStore } from "@/store/useGiftStore";
 
 export default function OccasionStep() {
   const router = useRouter();
+  const setField = useGiftStore(state => state.setField);
   const [selected, setSelected] = useState<string | null>(null);
-
-  const handleSelect = (option: string) => {
-    setSelected(option);
-  };
-
-  const handleNext = () => {
-    if (selected) {
-      router.push("/onboarding/step3");
-    }
-  };
 
   const options = [
     { id: "birthday", emoji: "🎂", title: "Birthday", desc: null },
@@ -26,6 +18,24 @@ export default function OccasionStep() {
     { id: "gratitude", emoji: "🙏", title: "Gratitude or apology", desc: null },
     { id: "hard-time", emoji: "💔", title: "They are going through something hard", desc: null },
   ];
+
+  const handleSelect = (option: string) => {
+    setSelected(option);
+  };
+
+  const handleNext = () => {
+    if (selected) {
+      if (selected === "not-sure") {
+        setField("occasion", "Not sure or Other");
+      } else {
+        const title = options.find(o => o.id === selected)?.title || selected;
+        setField("occasion", title);
+      }
+      router.push("/onboarding/step3");
+    }
+  };
+
+
 
   return (
     <div className="w-full max-w-[480px] min-h-screen bg-surface flex flex-col mx-auto relative overflow-hidden pb-32">

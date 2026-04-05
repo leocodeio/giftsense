@@ -10,7 +10,9 @@ export interface GiftProfileData {
   closeness: string;
   lifeRightNow: string;
   personality: string;
+  giftIntent: string;
   budget: string;
+  refinementContext?: string;
 }
 
 export async function generateGiftIdeas(data: GiftProfileData) {
@@ -35,7 +37,9 @@ Generate ideas for the following profile:
 - Closeness: ${data.closeness}
 - Life right now: ${data.lifeRightNow}
 - Personality: ${data.personality}
+- Gift Intent: ${data.giftIntent}
 - Budget: ${data.budget}
+${data.refinementContext ? `- Additional constraints/refinements (YOU MUST ADHERE TO THESE): ${data.refinementContext}` : ""}
   `;
 
   if (!MISTRAL_API_KEY) {

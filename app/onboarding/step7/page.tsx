@@ -3,21 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useGiftStore } from "@/store/useGiftStore";
 
 export default function BudgetStep() {
   const router = useRouter();
+  const setField = useGiftStore(state => state.setField);
   const [selected, setSelected] = useState<string | null>(null);
-
-  const handleSelect = (option: string) => {
-    setSelected(option);
-  };
-
-  const handleNext = () => {
-    if (selected) {
-      // Directs to the generation step 7
-      router.push("/onboarding/loading");
-    }
-  };
 
   const options = [
     { id: "under-500", emoji: "💸", title: "Under ₹500 — keeping it light" },
@@ -26,6 +17,27 @@ export default function BudgetStep() {
     { id: "3000-6000", emoji: "💎", title: "₹3,000 – ₹6,000" },
     { id: "above-6000", emoji: "👑", title: "₹6,000 and above" },
   ];
+
+  const handleSelect = (option: string) => {
+    setSelected(option);
+  };
+
+  const handleNext = () => {
+    if (selected) {
+      if (selected === "flexible") {
+        setField("budget", "Flexible — budget is not the main concern");
+      } else {
+        const title = options.find(o => o.id === selected)?.title || selected;
+        // Strip out the emoji-based subtext for a cleaner prompt, if you want.
+        const cleanTitle = title.split(" — ")[0];
+        setField("budget", cleanTitle);
+      }
+      // Directs to the generation step 7
+      router.push("/onboarding/loading");
+    }
+  };
+
+
 
   return (
     <div className="w-full max-w-[480px] min-h-screen bg-surface flex flex-col mx-auto relative overflow-hidden pb-32">

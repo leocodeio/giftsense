@@ -3,20 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useGiftStore } from "@/store/useGiftStore";
 
 export default function PersonalityStep() {
   const router = useRouter();
+  const setField = useGiftStore(state => state.setField);
   const [selected, setSelected] = useState<string | null>(null);
-
-  const handleSelect = (option: string) => {
-    setSelected(option);
-  };
-
-  const handleNext = () => {
-    if (selected) {
-      router.push("/onboarding/step6");
-    }
-  };
 
   const options = [
     { 
@@ -56,6 +48,24 @@ export default function PersonalityStep() {
       desc: "non-conformist, artsy, dislikes anything generic" 
     },
   ];
+
+  const handleSelect = (option: string) => {
+    setSelected(option);
+  };
+
+  const handleNext = () => {
+    if (selected) {
+      if (selected === "not-sure") {
+        setField("personality", "Not sure — a mix of these");
+      } else {
+        const title = options.find(o => o.id === selected)?.title || selected;
+        setField("personality", title);
+      }
+      router.push("/onboarding/step6");
+    }
+  };
+
+
 
   return (
     <div className="w-full max-w-[480px] min-h-screen bg-surface flex flex-col mx-auto relative overflow-hidden pb-32">

@@ -3,20 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useGiftStore } from "@/store/useGiftStore";
 
 export default function RelationshipStep() {
   const router = useRouter();
+  const setField = useGiftStore(state => state.setField);
   const [selected, setSelected] = useState<string | null>(null);
-
-  const handleSelect = (option: string) => {
-    setSelected(option);
-  };
-
-  const handleNext = () => {
-    if (selected) {
-      router.push("/onboarding/step4");
-    }
-  };
 
   const options = [
     { 
@@ -44,6 +36,24 @@ export default function RelationshipStep() {
       desc: "newer relationship" 
     },
   ];
+
+  const handleSelect = (option: string) => {
+    setSelected(option);
+  };
+
+  const handleNext = () => {
+    if (selected) {
+      if (selected === "not-sure") {
+        setField("closeness", "Somewhere in between");
+      } else {
+        const title = options.find(o => o.id === selected)?.title || selected;
+        setField("closeness", title);
+      }
+      router.push("/onboarding/step4");
+    }
+  };
+
+
 
   return (
     <div className="w-full max-w-[480px] min-h-screen bg-surface flex flex-col mx-auto relative overflow-hidden pb-32">

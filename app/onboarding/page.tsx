@@ -1,14 +1,22 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-// Uncomment to use the local DB when submitting the form to an action
-// import { db } from "@/lib/db";
+import { useGiftStore } from "@/store/useGiftStore";
 
 export default function Onboarding() {
-  const [name, setName] = useState("Priya");
-  const [gender, setGender] = useState("She / Her");
-  const [age, setAge] = useState("26 – 35");
+  const router = useRouter();
+  const setRecipientData = useGiftStore(state => state.setRecipientData);
+  
+  const [name, setName] = useState(useGiftStore.getState().recipientName);
+  const [gender, setGender] = useState(useGiftStore.getState().recipientGender);
+  const [age, setAge] = useState(useGiftStore.getState().recipientAge);
+
+  const handleNext = () => {
+    setRecipientData(name, gender, age);
+    router.push("/onboarding/step2");
+  };
 
   return (
     <div className="max-w-[480px] mx-auto min-h-screen bg-surface flex flex-col relative overflow-hidden">
@@ -129,13 +137,13 @@ export default function Onboarding() {
         {/* Bottom Action Area */}
         <footer className="px-6 pb-12 mt-auto">
           {/* Typically forms submit to update db, here we just link to a next step page */}
-          <Link
-            href="/onboarding/step2"
+          <button
+            onClick={handleNext}
             className="w-full h-[52px] bg-primary-container text-white font-bold rounded-full shadow-[0_8px_32px_rgba(172,53,9,0.15)] hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2"
           >
             Continue
             <span className="material-symbols-outlined text-lg">arrow_forward</span>
-          </Link>
+          </button>
           <div className="mt-6 flex items-center justify-center gap-2">
             <span className="material-symbols-outlined text-[16px] text-stone-400">lock</span>
             <p className="text-xs text-stone-400 font-body text-center">

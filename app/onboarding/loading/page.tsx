@@ -3,16 +3,30 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { performGiftGeneration } from "@/app/actions";
+import { useGiftStore } from "@/store/useGiftStore";
 
 export default function AILoadingStep() {
   const router = useRouter();
+  const giftStore = useGiftStore();
 
   useEffect(() => {
     // Fire the REAL generation request to the Mistral backend Server Action immediately when the page loads
     async function triggerAI() {
       try {
         console.log("Sending prompt to Mistral Model...");
-        const result = await performGiftGeneration();
+        
+        const payloadObject = {
+          giftingFor: `${giftStore.recipientName} · ${giftStore.recipientGender} · ${giftStore.recipientAge}`,
+          occasion: giftStore.occasion,
+          closeness: giftStore.closeness,
+          lifeRightNow: giftStore.lifeRightNow,
+          personality: giftStore.personality,
+          giftIntent: giftStore.giftIntent,
+          budget: giftStore.budget,
+          refinementContext: giftStore.refinementContext
+        };
+        
+        const result = await performGiftGeneration(payloadObject);
         
         console.log("SUCCESS! Here is what Mistral calculated for us:", result);
         
@@ -28,6 +42,7 @@ export default function AILoadingStep() {
     }
 
     triggerAI();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   return (
@@ -65,27 +80,27 @@ export default function AILoadingStep() {
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="text-stone-500 text-[13px]">Gifting for:</span>
-              <span className="text-on-surface font-bold text-[13px]">Priya · She/Her · 26–35</span>
+              <span className="text-on-surface font-bold text-[13px] text-right truncate max-w-[200px]">{giftStore.recipientName} · {giftStore.recipientGender}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-stone-500 text-[13px]">Occasion:</span>
-              <span className="text-on-surface font-bold text-[13px]">Festival or celebration</span>
+              <span className="text-on-surface font-bold text-[13px] text-right truncate max-w-[200px]">{giftStore.occasion}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-stone-500 text-[13px]">Closeness:</span>
-              <span className="text-on-surface font-bold text-[13px]">Extremely close</span>
+              <span className="text-on-surface font-bold text-[13px] text-right">{giftStore.closeness}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-stone-500 text-[13px]">Life right now:</span>
-              <span className="text-on-surface font-bold text-[13px]">Celebratory mood</span>
+              <span className="text-on-surface font-bold text-[13px] text-right truncate max-w-[200px]">{giftStore.lifeRightNow}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-stone-500 text-[13px]">Personality:</span>
-              <span className="text-on-surface font-bold text-[13px]">Deeply feeling</span>
+              <span className="text-on-surface font-bold text-[13px] text-right truncate max-w-[200px]">{giftStore.personality}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-stone-500 text-[13px]">Budget:</span>
-              <span className="text-on-surface font-bold text-[13px]">₹500 – ₹1,500</span>
+              <span className="text-on-surface font-bold text-[13px] text-right">{giftStore.budget}</span>
             </div>
           </div>
         </section>

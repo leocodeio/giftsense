@@ -3,20 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useGiftStore } from "@/store/useGiftStore";
 
 export default function LifeRightNowStep() {
   const router = useRouter();
+  const setField = useGiftStore(state => state.setField);
   const [selected, setSelected] = useState<string | null>(null);
-
-  const handleSelect = (option: string) => {
-    setSelected(option);
-  };
-
-  const handleNext = () => {
-    if (selected) {
-      router.push("/onboarding/step5");
-    }
-  };
 
   const options = [
     { id: "super-busy", emoji: "⚡", title: "Super busy — always on the go" },
@@ -26,6 +18,24 @@ export default function LifeRightNowStep() {
     { id: "calm", emoji: "🌿", title: "Calm and content — settled phase" },
     { id: "rebuilding", emoji: "💪", title: "Rebuilding — recovering and \nfinding their footing" },
   ];
+
+  const handleSelect = (option: string) => {
+    setSelected(option);
+  };
+
+  const handleNext = () => {
+    if (selected) {
+      if (selected === "not-sure") {
+        setField("lifeRightNow", "Not sure what is going on with them");
+      } else {
+        const title = options.find(o => o.id === selected)?.title || selected;
+        setField("lifeRightNow", title.replace("\n", " "));
+      }
+      router.push("/onboarding/step5");
+    }
+  };
+
+
 
   return (
     <div className="w-full max-w-[480px] min-h-screen bg-surface flex flex-col mx-auto relative overflow-hidden pb-32">
