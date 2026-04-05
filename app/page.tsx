@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       {/* Top Navigation Bar */}
-      <header className="bg-[#FFF8F5] dark:bg-stone-950 flex justify-between items-center w-full px-6 py-4 max-w-[480px] mx-auto fixed top-0 left-0 right-0 z-50">
+      <header className="absolute top-0 left-0 right-0 z-50 bg-transparent flex justify-between items-center w-full px-6 py-4 max-w-[480px] mx-auto">
         <div className="text-lg font-bold text-[#FF7043]">GiftSense</div>
         <div className="font-headline text-sm font-medium tracking-tight text-stone-500 hover:opacity-80 transition-opacity cursor-pointer">
           How it works
@@ -97,24 +97,7 @@ export default function Home() {
         </footer>
       </main>
 
-      {/* Bottom Navigation Bar */}
-      <nav className="fixed bottom-0 left-0 right-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 max-w-[480px] mx-auto bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl rounded-t-3xl shadow-[0_-8px_32px_rgba(172,53,9,0.06)]">
-        <a className="flex flex-col items-center justify-center bg-[#FF7043] text-white rounded-full p-3 mb-1 w-12 h-12 active:scale-95 duration-200" href="#">
-          <span className="material-symbols-outlined">redeem</span>
-        </a>
-        <a className="flex flex-col items-center justify-center text-stone-400 p-2 hover:text-[#AC3509] transition-colors active:scale-95 duration-200" href="#">
-          <span className="material-symbols-outlined">favorite</span>
-          <span className="font-label text-[10px] font-semibold">Saved</span>
-        </a>
-        <a className="flex flex-col items-center justify-center text-stone-400 p-2 hover:text-[#AC3509] transition-colors active:scale-95 duration-200" href="#">
-          <span className="material-symbols-outlined">calendar_today</span>
-          <span className="font-label text-[10px] font-semibold">Events</span>
-        </a>
-        <a className="flex flex-col items-center justify-center text-stone-400 p-2 hover:text-[#AC3509] transition-colors active:scale-95 duration-200" href="#">
-          <span className="material-symbols-outlined">person</span>
-          <span className="font-label text-[10px] font-semibold">Profile</span>
-        </a>
-      </nav>
+
     </>
   );
 }
