@@ -2,64 +2,119 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <>
+      {/* Top Navigation Bar */}
+      <header className="bg-[#FFF8F5] dark:bg-stone-950 flex justify-between items-center w-full px-6 py-4 max-w-[480px] mx-auto fixed top-0 left-0 right-0 z-50">
+        <div className="text-lg font-bold text-[#FF7043]">GiftSense</div>
+        <div className="font-headline text-sm font-medium tracking-tight text-stone-500 hover:opacity-80 transition-opacity cursor-pointer">
+          How it works
+        </div>
+      </header>
+
+      <div className="bg-[#FAF2EE] h-2 w-full max-w-[480px] mx-auto mt-[60px]"></div>
+
+      <main className="max-w-[480px] mx-auto pb-32">
+        {/* Hero Section */}
+        <section className="px-6 pt-12 pb-12 flex flex-col items-center text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFAB91] bg-opacity-20 text-[#AC3509] font-bold text-[11px] uppercase tracking-widest mb-8">
+            <span className="material-symbols-outlined text-[14px]">auto_awesome</span>
+            AI-powered gift thinking
+          </div>
+          <h1 className="text-4xl font-extrabold text-on-surface tracking-tight leading-[1.1] mb-6">
+            Know exactly what to give.<br />Feel completely confident.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-stone-500 text-base leading-relaxed max-w-[320px] mb-10">
+            Answer 6 quick questions about the person you are gifting. GiftSense builds their profile, understands their personality, and gives you the top 3 gifts that would truly resonate.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <button className="group relative flex items-center justify-center gap-2 h-[56px] w-full max-w-[280px] rounded-full bg-gradient-to-br from-primary to-primary-container text-white font-bold text-lg shadow-[0_8px_32px_rgba(172,53,9,0.2)] active:scale-95 transition-all">
+            Find the right gift
+            <span className="material-symbols-outlined">arrow_forward</span>
+          </button>
+          <p className="mt-4 text-xs font-medium text-stone-400 tracking-wide">
+            2 minutes · No sign-up needed
+          </p>
+        </section>
+
+        {/* Visual Decorative Break */}
+        <div className="px-6 py-4">
+          <div className="h-64 w-full rounded-3xl overflow-hidden relative shadow-lg">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              className="w-full h-full object-cover"
+              alt="Modern minimalist aesthetic of aesthetic gift wrapping"
+              src="/images/hero-gift.jpeg"
+              fill
+              sizes="(max-width: 480px) 100vw, 480px"
+              priority
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+          </div>
         </div>
+
+        {/* How It Works Section */}
+        <section className="px-6 py-12 bg-surface-container-low rounded-t-[40px] mt-8">
+          <h2 className="text-2xl font-bold text-on-surface mb-8 px-2">How it works</h2>
+          <div className="space-y-4">
+            {/* Card 1 */}
+            <div className="bg-surface-container-lowest p-6 rounded-[24px] flex gap-5 items-start">
+              <div className="w-12 h-12 rounded-2xl bg-surface-container flex items-center justify-center text-primary shrink-0">
+                <span className="material-symbols-outlined">chat</span>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-on-surface mb-1">Tell us about them</h3>
+                <p className="text-sm text-stone-500 leading-relaxed">Name, age, gender and 6 quick questions</p>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-surface-container-lowest p-6 rounded-[24px] flex gap-5 items-start border-l-4 border-primary">
+              <div className="w-12 h-12 rounded-2xl bg-surface-container flex items-center justify-center text-primary shrink-0">
+                <span className="material-symbols-outlined">auto_awesome</span>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-on-surface mb-1">AI builds their profile</h3>
+                <p className="text-sm text-stone-500 leading-relaxed">We understand their personality even from partial answers</p>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-surface-container-lowest p-6 rounded-[24px] flex gap-5 items-start">
+              <div className="w-12 h-12 rounded-2xl bg-surface-container flex items-center justify-center text-primary shrink-0">
+                <span className="material-symbols-outlined">redeem</span>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-on-surface mb-1">Get your top 3 gifts</h3>
+                <p className="text-sm text-stone-500 leading-relaxed">Real suggestions with reasoning, not generic lists</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="px-6 py-12 text-center border-t border-stone-100 mt-8">
+          <p className="text-stone-400 font-medium text-sm tracking-tight">
+            GiftSense · Built for thoughtful givers
+          </p>
+        </footer>
       </main>
-    </div>
+
+      {/* Bottom Navigation Bar */}
+      <nav className="fixed bottom-0 left-0 right-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 max-w-[480px] mx-auto bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl rounded-t-3xl shadow-[0_-8px_32px_rgba(172,53,9,0.06)]">
+        <a className="flex flex-col items-center justify-center bg-[#FF7043] text-white rounded-full p-3 mb-1 w-12 h-12 active:scale-95 duration-200" href="#">
+          <span className="material-symbols-outlined">redeem</span>
+        </a>
+        <a className="flex flex-col items-center justify-center text-stone-400 p-2 hover:text-[#AC3509] transition-colors active:scale-95 duration-200" href="#">
+          <span className="material-symbols-outlined">favorite</span>
+          <span className="font-label text-[10px] font-semibold">Saved</span>
+        </a>
+        <a className="flex flex-col items-center justify-center text-stone-400 p-2 hover:text-[#AC3509] transition-colors active:scale-95 duration-200" href="#">
+          <span className="material-symbols-outlined">calendar_today</span>
+          <span className="font-label text-[10px] font-semibold">Events</span>
+        </a>
+        <a className="flex flex-col items-center justify-center text-stone-400 p-2 hover:text-[#AC3509] transition-colors active:scale-95 duration-200" href="#">
+          <span className="material-symbols-outlined">person</span>
+          <span className="font-label text-[10px] font-semibold">Profile</span>
+        </a>
+      </nav>
+    </>
   );
 }
