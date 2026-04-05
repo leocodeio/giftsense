@@ -12,29 +12,43 @@ export default function Onboarding() {
 
   return (
     <div className="max-w-[480px] mx-auto min-h-screen bg-surface flex flex-col relative overflow-hidden">
-      {/* TopNavBar */}
-      <nav className="flex justify-between items-center w-full px-6 py-4 max-w-[480px] mx-auto bg-transparent font-headline text-sm font-medium tracking-tight relative z-10">
-        <div className="text-lg font-bold text-primary">GiftSense</div>
-        <Link href="/" className="text-stone-500 hover:text-primary transition-colors active:scale-95 duration-150">
-          Exit
+      {/* Top Navigation Area */}
+      <header className="bg-transparent flex justify-between items-center w-full px-6 py-4 relative z-10">
+        <Link href="/" className="flex items-center gap-2 text-stone-500 hover:text-stone-700 transition-colors">
+          <span className="material-symbols-outlined">arrow_back</span>
+          <span className="font-headline text-sm font-medium tracking-tight">Back</span>
         </Link>
-      </nav>
+        <div className="text-primary font-headline text-sm font-bold tracking-tight">GiftSense</div>
+        <Link href="/" className="text-primary font-headline text-sm font-medium tracking-tight hover:opacity-80 transition-opacity active:scale-95 duration-150">Exit</Link>
+      </header>
 
-      <div className="bg-[#FAF2EE] h-2 w-full relative z-10"></div>
+      {/* Progress Header */}
+      <div className="flex justify-between items-center w-full px-6 pt-4 pb-2 relative z-10">
+        <div className="flex gap-1">
+          <div className="h-2 w-8 rounded-full bg-gradient-to-r from-[#AC3509] to-[#FF7043]"></div>
+          <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
+          <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
+          <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
+          <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
+          <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
+          <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
+        </div>
+        <span className="text-primary font-headline text-xs font-bold uppercase tracking-wider">Step 1 of 7</span>
+      </div>
 
       <main className="flex-1 flex flex-col relative z-10">
         {/* Header Section */}
-        <header className="px-6 pt-8">
-          <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant font-label text-xs font-semibold tracking-wide mb-6">
-            Step 1 of 7 · About them
+        <div className="mb-10 px-6 pt-8">
+          <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant text-xs font-bold uppercase tracking-widest mb-4">
+            About them
           </div>
           <h1 className="font-headline text-3xl font-extrabold text-on-surface tracking-tight leading-tight mb-2">
             Who are you gifting?
           </h1>
-          <p className="font-body text-on-surface-variant text-base">
+          <p className="text-on-surface-variant text-lg font-body leading-relaxed">
             This personalises everything that follows.
           </p>
-        </header>
+        </div>
 
         <section className="flex-1">
           {/* FIELD 1 - Name */}
