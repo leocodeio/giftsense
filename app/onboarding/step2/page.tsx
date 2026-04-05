@@ -48,8 +48,9 @@ export default function OccasionStep() {
           <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
           <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
           <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
+          <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
         </div>
-        <span className="text-primary font-headline text-xs font-bold uppercase tracking-wider">Step 2 of 6</span>
+        <span className="text-primary font-headline text-xs font-bold uppercase tracking-wider">Step 2 of 7</span>
       </div>
 
       <main className="flex-1 px-6 pt-8 pb-12 overflow-y-auto relative z-10">

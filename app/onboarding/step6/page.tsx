@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function BudgetStep() {
+export default function IntentStep() {
   const router = useRouter();
   const [selected, setSelected] = useState<string | null>(null);
 
@@ -14,17 +14,41 @@ export default function BudgetStep() {
 
   const handleNext = () => {
     if (selected) {
-      // Directs to the generation step 7
-      router.push("/onboarding/loading");
+      router.push("/onboarding/step7");
     }
   };
 
   const options = [
-    { id: "under-500", emoji: "💸", title: "Under ₹500 — keeping it light" },
-    { id: "500-1500", emoji: "💳", title: "₹500 – ₹1,500" },
-    { id: "1500-3000", emoji: "🎁", title: "₹1,500 – ₹3,000" },
-    { id: "3000-6000", emoji: "💎", title: "₹3,000 – ₹6,000" },
-    { id: "above-6000", emoji: "👑", title: "₹6,000 and above" },
+    { 
+      id: "see-you", 
+      icon: "visibility", 
+      title: "I see you — I notice and\nI truly know you" 
+    },
+    { 
+      id: "believe-you", 
+      icon: "fitness_center", 
+      title: "I believe in you — I am\ncheering for where you are going" 
+    },
+    { 
+      id: "care", 
+      icon: "diversity_1", 
+      title: "I care about you — I want\nyou to feel looked after" 
+    },
+    { 
+      id: "celebrate", 
+      icon: "celebration", 
+      title: "Let us celebrate — this\nmoment deserves to be marked" 
+    },
+    { 
+      id: "enjoy", 
+      icon: "sentiment_satisfied", 
+      title: "Enjoy yourself — just for\nyou, no reason needed" 
+    },
+    { 
+      id: "thank-you", 
+      icon: "volunteer_activism", 
+      title: "Thank you — my way of\nexpressing real gratitude" 
+    },
   ];
 
   return (
@@ -48,76 +72,69 @@ export default function BudgetStep() {
           <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
           <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
           <div className="h-2 w-8 rounded-full bg-gradient-to-r from-[#AC3509] to-[#FF7043]"></div>
+          <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
         </div>
-        <span className="text-primary font-headline text-xs font-bold uppercase tracking-wider">Step 6 of 6</span>
+        <span className="text-primary font-headline text-xs font-bold uppercase tracking-wider">Step 6 of 7</span>
       </div>
 
       <main className="flex-1 px-6 pt-10 flex-grow relative z-10">
         {/* Header Section */}
         <div className="mb-10">
           <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant text-xs font-bold uppercase tracking-widest mb-4">
-            Budget
+            What you want to say
           </div>
-          <h2 className="font-headline text-[2rem] font-extrabold leading-tight text-on-surface -tracking-[0.02em] mb-3">
-            What is your rough budget for this gift?
+          <h2 className="font-headline text-[2.25rem] font-extrabold leading-[1.1] text-on-surface -tracking-[0.02em] mb-3">
+            What do you most want this gift to express?
           </h2>
-          <p className="text-on-surface-variant text-lg font-medium leading-relaxed">
-            No judgment — thoughtfulness matters more than price.
+          <p className="text-on-surface-variant text-lg font-medium leading-relaxed opacity-80">
+            Every gift says something. What do you want yours to say?
           </p>
         </div>
 
         {/* Answer Options */}
-        <div className="space-y-4 mb-8">
+        <div className="space-y-4">
           {options.map((opt) => {
             const isSelected = selected === opt.id;
             return (
               <button
                 key={opt.id}
                 onClick={() => handleSelect(opt.id)}
-                className={`group flex w-full items-center justify-between p-5 rounded-xl transition-all active:scale-[0.98] duration-150 text-left border-l-4 ${
+                className={`group flex w-full items-start justify-between p-6 rounded-xl transition-all active:scale-[0.98] duration-150 text-left border-2 ${
                   isSelected
-                    ? "bg-primary-container shadow-[0_8px_32px_rgba(172,53,9,0.12)] border-primary-container"
-                    : "bg-surface-container-lowest border-transparent hover:bg-surface-container-low"
+                    ? "bg-primary-container border-primary-container shadow-[0_8px_32px_rgba(172,53,9,0.12)]"
+                    : "bg-surface-container-lowest border-transparent hover:bg-surface-container-low border-surface-container-lowest"
                 }`}
               >
-                <div className="flex items-center gap-4">
-                  <span className="text-2xl">{opt.emoji}</span>
-                  <span className={`block font-headline text-base ${isSelected ? "text-white font-bold" : "text-on-surface font-medium group-hover:text-primary transition-colors"}`}>
+                <div className="flex-1">
+                  <span className={`material-symbols-outlined mb-3 block ${isSelected ? "text-white" : "text-primary"}`} data-icon={opt.icon}>{opt.icon}</span>
+                  <h3 className={`font-headline font-bold text-lg leading-tight whitespace-pre-wrap ${isSelected ? "text-white" : "text-on-surface"}`}>
                     {opt.title}
-                  </span>
+                  </h3>
                 </div>
                 {isSelected && (
-                  <span className="material-symbols-outlined text-white self-center" style={{ fontVariationSettings: "'FILL' 1" }}>
-                    check_circle
-                  </span>
+                  <div className="bg-white rounded-full p-1 flex items-center justify-center h-6 w-6 mt-1">
+                    <span className="material-symbols-outlined text-primary-container font-bold text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
+                      check
+                    </span>
+                  </div>
                 )}
               </button>
             );
           })}
 
-          {/* Flexible Option */}
+          {/* Not Sure Option */}
           <button 
-            onClick={() => handleSelect("flexible")}
-            className={`w-full mt-4 p-5 rounded-xl transition-all active:scale-[0.98] duration-150 text-center border-2 border-dashed ${
-              selected === "flexible"
+            onClick={() => handleSelect("not-sure")}
+            className={`w-full mt-8 p-6 rounded-xl transition-all active:scale-[0.98] duration-150 text-center border-2 border-dashed ${
+              selected === "not-sure"
                 ? "bg-primary-container border-primary-container text-white"
-                : "bg-[#FFF3EE] border-[#FFAB91] text-stone-500 hover:bg-[#FFE8DE]"
+                : "bg-[#FFF3EE] border-[#FFAB91] hover:bg-surface-container-low"
             }`}
           >
-            <span className={`font-body text-sm italic leading-snug font-medium ${selected === "flexible" ? "text-white" : "text-stone-500"}`}>
-              Flexible — budget is not the main concern
+            <span className={`font-body text-[15px] italic leading-snug ${selected === "not-sure" ? "text-white" : "text-stone-500"}`}>
+              Not sure — just want it to feel thoughtful
             </span>
           </button>
-        </div>
-
-        {/* Almost done banner */}
-        <div className="bg-surface-container-lowest border border-[#F5E6E0] rounded-2xl p-[14px] px-[16px] flex items-center gap-4 mb-2 shadow-[0_8px_32px_rgba(172,53,9,0.06)]">
-          <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
-            <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
-          </div>
-          <p className="text-on-surface-variant text-sm leading-snug font-medium">
-            Almost done. We will <br/> build their profile now.
-          </p>
         </div>
       </main>
 
@@ -133,10 +150,9 @@ export default function BudgetStep() {
                 : "bg-surface-container-highest text-stone-400 cursor-not-allowed opacity-70 shadow-none border-none"
             }`}
           >
-            Build profile
-            <span className="material-symbols-outlined text-lg opacity-90">auto_awesome</span>
+            Next Question
+            <span className="material-symbols-outlined text-lg">arrow_forward</span>
           </button>
-          <p className="mt-3 text-stone-400 italic text-[11px] font-medium text-center tracking-wide">Takes about 3 seconds</p>
         </div>
       </footer>
 

@@ -48,8 +48,9 @@ export default function LifeRightNowStep() {
           <div className="h-2 w-8 rounded-full bg-gradient-to-r from-[#AC3509] to-[#FF7043]"></div>
           <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
           <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
+          <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
         </div>
-        <span className="text-primary font-headline text-xs font-bold uppercase tracking-wider">Step 4 of 6</span>
+        <span className="text-primary font-headline text-xs font-bold uppercase tracking-wider">Step 4 of 7</span>
       </div>
 
       <main className="flex-1 px-6 pt-10 flex-grow relative z-10">
