@@ -18,7 +18,9 @@ export default function AILoadingStep() {
         
         // Push payload into session storage since Next state is unmounted across hard nav
         sessionStorage.setItem("ai_gift_payload", JSON.stringify(result));
-        router.push("/results"); 
+        
+        const isRefined = sessionStorage.getItem("is_refined") === "true";
+        router.push(isRefined ? "/refined-results" : "/results"); 
 
       } catch (error) {
         console.error("Failed to generate with Mistral:", error);

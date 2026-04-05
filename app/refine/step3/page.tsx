@@ -10,6 +10,7 @@ export default function RefineStepThree() {
 
   const handleNext = () => {
     // End of the refinement sequence. Time to rebuild the results!
+    sessionStorage.setItem("is_refined", "true");
     router.push("/onboarding/loading");
   };
 
