@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import ConfidenceModal from "@/components/ConfidenceModal";
 
 // Define the shape based on the updated Mistral schema
 interface AIGiftPayload {
@@ -19,6 +20,8 @@ interface AIGiftPayload {
 export default function ResultsScreen() {
   const router = useRouter();
   const [data, setData] = useState<AIGiftPayload | null>(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
 
   useEffect(() => {
     // Rehydrate the Mistral API data from Session Storage
@@ -26,7 +29,8 @@ export default function ResultsScreen() {
     if (stored) {
       try {
         const parsed = JSON.parse(stored) as AIGiftPayload;
-        setData(parsed);
+        // Avoid synchronous state updates during initial render cycle which triggers lint errors
+        setTimeout(() => setData(parsed), 0);
       } catch (e) {
         console.error("Failed to parse AI payload", e);
       }
@@ -55,7 +59,10 @@ export default function ResultsScreen() {
             <div className="bg-white px-3 py-1 rounded-full border border-[#FF7043] text-[#FF7043] text-xs font-bold font-headline">
               AI Gift Profile
             </div>
-            <div className="bg-[#E8F5E9] px-3 py-1 rounded-full text-[#2E7D32] text-xs font-bold font-headline flex items-center gap-1">
+            <div 
+              onClick={() => setModalOpen(true)}
+              className="bg-[#E8F5E9] px-3 py-1 rounded-full text-[#2E7D32] text-xs font-bold font-headline flex items-center gap-1 cursor-pointer hover:bg-[#C8E6C9] active:scale-95 transition-all"
+            >
               <span className="material-symbols-outlined text-[14px]">check_circle</span>
               High Confidence
             </div>
@@ -71,7 +78,7 @@ export default function ResultsScreen() {
           </div>
           
           <p className="mt-2 text-on-surface text-[16px] leading-[1.7] font-normal italic opacity-90 font-body">
-            "{data.profileSummary}"
+            &quot;{data.profileSummary}&quot;
           </p>
           
           {/* Tag Signals loop */}
@@ -94,56 +101,52 @@ export default function ResultsScreen() {
           </div>
         </div>
 
-        <div className="space-y-4 px-4">
+        {/* Gift Cards Grid */}
+        <div className="flex flex-col gap-4 px-4">
           {data.gifts?.map((gift, index) => {
-            const isTopRank = index === 0;
-
+            const isExpanded = expandedIndex === index;
             return (
               <div 
                 key={index} 
-                className={`bg-surface-container-lowest rounded-[20px] p-5 shadow-[0_8px_32px_rgba(172,53,9,0.06)] relative overflow-hidden ${
-                  isTopRank ? "border-l-4 border-[#FF7043]" : ""
-                }`}
+                onClick={() => setExpandedIndex(isExpanded ? null : index)}
+                className="bg-surface-container-lowest rounded-2xl p-6 shadow-[0_4px_24px_rgba(172,53,9,0.04)] coral-mist-shadow transition-all overflow-hidden cursor-pointer"
               >
-                <div className="flex justify-between items-start mb-3">
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-sm font-headline ${
-                    isTopRank ? "bg-[#FF7043] text-white" : "bg-surface-container-highest text-on-surface-variant"
-                  }`}>
-                    {index + 1}
-                  </div>
-                  {isTopRank && (
-                    <div className="bg-primary-container/10 text-primary font-bold text-[10px] uppercase tracking-widest px-2 py-1 rounded-md">
-                      Best match
+                <div className="flex justify-between items-start">
+                  <div className="flex gap-4 items-center">
+                    <div className="w-12 h-12 bg-primary-container/10 rounded-xl flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>redeem</span>
                     </div>
-                  )}
+                    <div className="flex flex-col">
+                      {index === 0 && (
+                        <div className="w-fit bg-primary-fixed px-2 py-0.5 mb-1 rounded-full text-primary-fixed-variant text-[10px] font-extrabold uppercase tracking-widest font-headline">
+                          Top Match
+                        </div>
+                      )}
+                      <h2 className="font-headline text-lg font-bold select-none leading-tight">{gift.title}</h2>
+                    </div>
+                  </div>
+                  <span className="material-symbols-outlined text-stone-400 mt-2 shrink-0">
+                    {isExpanded ? "expand_less" : "expand_more"}
+                  </span>
                 </div>
-
-                <h3 className="text-lg font-bold font-headline text-on-surface leading-tight">
-                  {gift.title}
-                </h3>
                 
-                <p className="mt-3 text-sm text-on-surface-variant leading-relaxed font-body">
-                  {gift.description}
-                </p>
-
-                <p className="mt-3 text-sm text-on-surface-variant leading-relaxed font-body">
-                  <span className="font-bold text-primary italic">Why AI picked this: </span> 
-                  {gift.reasoning}
-                </p>
-
-                <div className="mt-4 flex justify-between items-center border-t border-surface-container-highest pt-4">
-                  <div className={`font-bold font-headline ${isTopRank ? "text-primary" : "text-on-surface-variant"}`}>
-                    {gift.priceEstimate}
-                  </div>
-                  {isTopRank ? (
-                    <div className="bg-[#E8F5E9] text-[#2E7D32] text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
-                      <span className="material-symbols-outlined text-[12px]">account_balance_wallet</span>
-                      Within budget
+                {isExpanded && (
+                  <div className="mt-4 pt-4 border-t border-surface-container animate-fade-in">
+                    <p className="text-sm font-bold text-on-surface mb-2">Est. Cost: <span className="font-normal">{gift.priceEstimate || "Unknown"}</span></p>
+                    <p className="text-on-surface-variant text-sm leading-relaxed mb-4 font-body">
+                      {gift.description}
+                    </p>
+                    <div className="bg-[#FFF3EE] p-4 rounded-xl border border-[#FFAB91] border-dashed">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="material-symbols-outlined text-[#AC3509] text-sm">auto_awesome</span>
+                        <span className="text-[#AC3509] text-xs font-bold uppercase tracking-wider font-headline">Why this fits</span>
+                      </div>
+                      <p className="text-[#852300] text-sm font-medium leading-relaxed font-body">
+                        &quot;{gift.reasoning}&quot;
+                      </p>
                     </div>
-                  ) : (
-                    <span className="material-symbols-outlined text-stone-300">redeem</span>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             );
           })}
@@ -151,17 +154,21 @@ export default function ResultsScreen() {
       </section>
 
       {/* Section C: Actions */}
-      <section className="mt-12 px-6 flex flex-col gap-4">
-        <Link href="/refine" className="w-full h-[52px] rounded-full border-2 border-primary text-primary font-bold font-headline flex items-center justify-center gap-2 hover:bg-primary/5 active:scale-[0.96] transition-all">
-          <span className="material-symbols-outlined text-[18px]">auto_awesome</span>
-          Not the right fit? Refine the suggestions
+      <section className="mt-12 flex flex-col items-center gap-6 px-6">
+        <Link href="/refine" className="w-full h-[54px] bg-gradient-to-br from-primary to-primary-container rounded-full text-white font-headline font-bold text-lg flex items-center justify-center gap-2 shadow-[0_8px_32px_rgba(172,53,9,0.16)] active:scale-95 transition-transform hover:opacity-95">
+          Refine & Get Better AI Hits
+          <span className="material-symbols-outlined text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
         </Link>
-        
-        <Link href="/onboarding" className="w-full py-2 text-stone-500 font-medium text-sm flex items-center justify-center gap-1 hover:text-primary transition-colors active:scale-95">
-          <span className="material-symbols-outlined text-sm">refresh</span>
-          Start a new gift profile
-        </Link>
+        <button 
+            onClick={() => setModalOpen(true)}
+            className="text-stone-500 font-headline font-semibold text-sm flex items-center gap-2 hover:text-primary transition-colors active:scale-95"
+        >
+          <span className="material-symbols-outlined text-lg">north_east</span>
+          Share these suggestions
+        </button>
       </section>
+
+      <ConfidenceModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
     </div>
   );
 }
