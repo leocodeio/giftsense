@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -6,9 +7,9 @@ export default function Home() {
       {/* Top Navigation Bar */}
       <header className="absolute top-0 left-0 right-0 z-50 bg-transparent flex justify-between items-center w-full px-6 py-4 max-w-[480px] mx-auto">
         <div className="text-lg font-bold text-[#FF7043]">GiftSense</div>
-        <div className="font-headline text-sm font-medium tracking-tight text-stone-500 hover:opacity-80 transition-opacity cursor-pointer">
+        <Link href="#how-it-works" className="font-headline text-sm font-medium tracking-tight text-stone-500 hover:text-primary transition-colors cursor-pointer">
           How it works
-        </div>
+        </Link>
       </header>
 
       <div className="bg-[#FAF2EE] h-2 w-full max-w-[480px] mx-auto mt-[60px]"></div>
@@ -26,10 +27,10 @@ export default function Home() {
           <p className="text-stone-500 text-base leading-relaxed max-w-[320px] mb-10">
             Answer 6 quick questions about the person you are gifting. GiftSense builds their profile, understands their personality, and gives you the top 3 gifts that would truly resonate.
           </p>
-          <button className="group relative flex items-center justify-center gap-2 h-[56px] w-full max-w-[280px] rounded-full bg-gradient-to-br from-primary to-primary-container text-white font-bold text-lg shadow-[0_8px_32px_rgba(172,53,9,0.2)] active:scale-95 transition-all">
+          <Link href="/onboarding" className="group relative flex items-center justify-center gap-2 h-[56px] w-full max-w-[280px] rounded-full bg-gradient-to-br from-primary to-primary-container text-white font-bold text-lg shadow-[0_8px_32px_rgba(172,53,9,0.2)] active:scale-95 transition-all">
             Find the right gift
             <span className="material-symbols-outlined">arrow_forward</span>
-          </button>
+          </Link>
           <p className="mt-4 text-xs font-medium text-stone-400 tracking-wide">
             2 minutes · No sign-up needed
           </p>
@@ -51,7 +52,7 @@ export default function Home() {
         </div>
 
         {/* How It Works Section */}
-        <section className="px-6 py-12 bg-surface-container-low rounded-t-[40px] mt-8">
+        <section id="how-it-works" className="px-6 py-12 bg-surface-container-low rounded-t-[40px] mt-8">
           <h2 className="text-2xl font-bold text-on-surface mb-8 px-2">How it works</h2>
           <div className="space-y-4">
             {/* Card 1 */}
