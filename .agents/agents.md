@@ -40,7 +40,7 @@ Welcome to the **GiftSense** codebase. This project is a modern web application 
 ## 🧩 UI/UX Onboarding Flow Patterns
 When building multi-step onboarding sections seamlessly derived from designs (like Stitch exports/HTML):
 1. **Top Navigation**: Always include a translucent z-10 header containing: a `Back` link on the left, `GiftSense` brand colored primary in the center, and `Exit` link on the right.
-2. **Standard Progress Bar**: Do not follow ad-hoc progress trackers. Use the fixed 7-step sequence (`w-2` dots, with the active dot being `w-8 bg-gradient-to-r from-primary to-[#FF7043]`). Set the label strictly to `Step X of 7`.
+2. **Standard Progress Bar**: Do not follow ad-hoc progress trackers. Use the fixed 6-step sequence (`w-2` dots, with the active dot being `w-8 bg-gradient-to-r from-primary to-[#FF7043]`). Set the label strictly to `Step X of 6`.
 3. **Pill Topic Tag**: Use the standard `inline-flex items-center px-4 py-1.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant text-xs font-bold uppercase tracking-widest mb-4` layout.
 4. **Sticky Bottom Action Area (Explicit Next Button)**: 
    - **Do not use auto-forwarding** timeouts (`setTimeout`) when an option is selected.

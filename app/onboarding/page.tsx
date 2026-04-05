@@ -31,9 +31,8 @@ export default function Onboarding() {
           <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
           <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
           <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
-          <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
         </div>
-        <span className="text-primary font-headline text-xs font-bold uppercase tracking-wider">Step 1 of 7</span>
+        <span className="text-primary font-headline text-xs font-bold uppercase tracking-wider">Step 1 of 6</span>
       </div>
 
       <main className="flex-1 flex flex-col relative z-10">

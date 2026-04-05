@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function LifeRightNowStep() {
+export default function BudgetStep() {
   const router = useRouter();
   const [selected, setSelected] = useState<string | null>(null);
 
@@ -14,24 +14,24 @@ export default function LifeRightNowStep() {
 
   const handleNext = () => {
     if (selected) {
-      router.push("/onboarding/step5");
+      // Directs to the generation step 7
+      router.push("/onboarding/loading");
     }
   };
 
   const options = [
-    { id: "super-busy", emoji: "⚡", title: "Super busy — always on the go" },
-    { id: "going-through-change", emoji: "🌱", title: "Going through change — new chapter" },
-    { id: "celebratory", emoji: "🎊", title: "Celebratory — things are going well" },
-    { id: "stressed", emoji: "😮", title: "Stressed or overwhelmed" },
-    { id: "calm", emoji: "🌿", title: "Calm and content — settled phase" },
-    { id: "rebuilding", emoji: "💪", title: "Rebuilding — recovering and \nfinding their footing" },
+    { id: "under-500", emoji: "💸", title: "Under ₹500 — keeping it light" },
+    { id: "500-1500", emoji: "💳", title: "₹500 – ₹1,500" },
+    { id: "1500-3000", emoji: "🎁", title: "₹1,500 – ₹3,000" },
+    { id: "3000-6000", emoji: "💎", title: "₹3,000 – ₹6,000" },
+    { id: "above-6000", emoji: "👑", title: "₹6,000 and above" },
   ];
 
   return (
     <div className="w-full max-w-[480px] min-h-screen bg-surface flex flex-col mx-auto relative overflow-hidden pb-32">
       {/* Top Navigation Area */}
       <header className="bg-transparent flex justify-between items-center w-full px-6 py-4 relative z-10">
-        <Link href="/onboarding/step3" className="flex items-center gap-2 text-stone-500 hover:text-stone-700 transition-colors">
+        <Link href="/onboarding/step5" className="flex items-center gap-2 text-stone-500 hover:text-stone-700 transition-colors">
           <span className="material-symbols-outlined">arrow_back</span>
           <span className="font-headline text-sm font-medium tracking-tight">Back</span>
         </Link>
@@ -45,29 +45,29 @@ export default function LifeRightNowStep() {
           <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
           <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
           <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
+          <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
+          <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
           <div className="h-2 w-8 rounded-full bg-gradient-to-r from-[#AC3509] to-[#FF7043]"></div>
-          <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
-          <div className="h-2 w-2 rounded-full bg-surface-container-highest"></div>
         </div>
-        <span className="text-primary font-headline text-xs font-bold uppercase tracking-wider">Step 4 of 6</span>
+        <span className="text-primary font-headline text-xs font-bold uppercase tracking-wider">Step 6 of 6</span>
       </div>
 
       <main className="flex-1 px-6 pt-10 flex-grow relative z-10">
         {/* Header Section */}
         <div className="mb-10">
           <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant text-xs font-bold uppercase tracking-widest mb-4">
-            Their life right now
+            Budget
           </div>
           <h2 className="font-headline text-[2rem] font-extrabold leading-tight text-on-surface -tracking-[0.02em] mb-3">
-            What does their life feel like at the moment?
+            What is your rough budget for this gift?
           </h2>
           <p className="text-on-surface-variant text-lg font-medium leading-relaxed">
-            Think about the last few weeks.
+            No judgment — thoughtfulness matters more than price.
           </p>
         </div>
 
         {/* Answer Options */}
-        <div className="space-y-4">
+        <div className="space-y-4 mb-8">
           {options.map((opt) => {
             const isSelected = selected === opt.id;
             return (
@@ -76,40 +76,48 @@ export default function LifeRightNowStep() {
                 onClick={() => handleSelect(opt.id)}
                 className={`group flex w-full items-center justify-between p-5 rounded-xl transition-all active:scale-[0.98] duration-150 text-left border-l-4 ${
                   isSelected
-                    ? "bg-primary-container shadow-[0_8px_24px_rgba(172,53,9,0.15)] border-primary-container"
-                    : "bg-surface-container-lowest hover:border-primary-container border-transparent"
+                    ? "bg-primary-container shadow-[0_8px_32px_rgba(172,53,9,0.12)] border-primary-container"
+                    : "bg-surface-container-lowest border-transparent hover:bg-surface-container-low"
                 }`}
               >
                 <div className="flex items-center gap-4">
                   <span className="text-2xl">{opt.emoji}</span>
-                  <span className={`font-semibold ${isSelected ? "text-white" : "text-on-surface whitespace-pre-wrap"}`}>
+                  <span className={`block font-headline text-base ${isSelected ? "text-white font-bold" : "text-on-surface font-medium group-hover:text-primary transition-colors"}`}>
                     {opt.title}
                   </span>
                 </div>
                 {isSelected && (
-                  <div className="bg-white/20 p-1 rounded-full flex items-center justify-center">
-                    <span className="material-symbols-outlined text-white" style={{ fontVariationSettings: "'FILL' 1" }}>
-                      check
-                    </span>
-                  </div>
+                  <span className="material-symbols-outlined text-white self-center" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    check_circle
+                  </span>
                 )}
               </button>
             );
           })}
 
-          {/* Not Sure State */}
+          {/* Flexible Option */}
           <button 
-            onClick={() => handleSelect("not-sure")}
-            className={`mt-4 group flex w-full items-center justify-center p-5 rounded-xl transition-all active:scale-[0.98] duration-150 text-center border-2 border-dashed ${
-              selected === "not-sure"
+            onClick={() => handleSelect("flexible")}
+            className={`w-full mt-4 p-5 rounded-xl transition-all active:scale-[0.98] duration-150 text-center border-2 border-dashed ${
+              selected === "flexible"
                 ? "bg-primary-container border-primary-container text-white"
-                : "bg-[#FFF3EE] border-[#FFAB91] text-stone-500"
+                : "bg-[#FFF3EE] border-[#FFAB91] text-stone-500 hover:bg-[#FFE8DE]"
             }`}
           >
-            <span className={`italic font-medium ${selected === "not-sure" ? "text-white" : "text-stone-500"}`}>
-              Not sure what is going on with them
+            <span className={`font-body text-sm italic leading-snug font-medium ${selected === "flexible" ? "text-white" : "text-stone-500"}`}>
+              Flexible — budget is not the main concern
             </span>
           </button>
+        </div>
+
+        {/* Almost done banner */}
+        <div className="bg-surface-container-lowest border border-[#F5E6E0] rounded-2xl p-[14px] px-[16px] flex items-center gap-4 mb-2 shadow-[0_8px_32px_rgba(172,53,9,0.06)]">
+          <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+            <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
+          </div>
+          <p className="text-on-surface-variant text-sm leading-snug font-medium">
+            Almost done. We will <br/> build their profile now.
+          </p>
         </div>
       </main>
 
@@ -125,15 +133,15 @@ export default function LifeRightNowStep() {
                 : "bg-surface-container-highest text-stone-400 cursor-not-allowed opacity-70 shadow-none border-none"
             }`}
           >
-            Next Question
-            <span className="material-symbols-outlined text-lg">arrow_forward</span>
+            Build profile
+            <span className="material-symbols-outlined text-lg opacity-90">auto_awesome</span>
           </button>
+          <p className="mt-3 text-stone-400 italic text-[11px] font-medium text-center tracking-wide">Takes about 3 seconds</p>
         </div>
       </footer>
 
       {/* Decorative background glows */}
       <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="fixed bottom-40 -left-20 w-80 h-80 bg-secondary-container/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
     </div>
   );
 }
