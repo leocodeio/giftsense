@@ -20,9 +20,13 @@ export async function generateGiftIdeas(data: GiftProfileData) {
   const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY;
   
   const systemPrompt = `You are GiftSense, an expert AI gift recommendation engine. 
-Based on the provided demographic, occasion, and psychological profile of the recipient, suggest exactly 3 highly thoughtful, unique gift ideas.
-Return the response STRICTLY in valid JSON format matching this schema: 
-{ "gifts": [{ "title": "...", "description": "...", "reasoning": "...", "priceEstimate": "..." }] }`;
+Based on the provided demographic, occasion, and psychological profile of the recipient, construct a holistic persona and suggest exactly 3 highly thoughtful, unique gift ideas.
+Return the response STRICTLY in valid JSON format matching this exact schema: 
+{ 
+  "profileSummary": "A short, 2-3 sentence personalized psychological profile describing the recipient's current state and exact gifting needs. Write this warmly. Quote format.",
+  "signals": ["Array of 3 tags/traits like 'The Feeler', 'Sentimental', 'Practical' etc"],
+  "gifts": [{ "title": "...", "description": "...", "reasoning": "...", "priceEstimate": "..." }] 
+}`;
 
   const userPrompt = `
 Generate ideas for the following profile:

@@ -16,8 +16,9 @@ export default function AILoadingStep() {
         
         console.log("SUCCESS! Here is what Mistral calculated for us:", result);
         
-        // In the next step, we will store this result and redirect to /results
-        // router.push("/results"); 
+        // Push payload into session storage since Next state is unmounted across hard nav
+        sessionStorage.setItem("ai_gift_payload", JSON.stringify(result));
+        router.push("/results"); 
 
       } catch (error) {
         console.error("Failed to generate with Mistral:", error);
